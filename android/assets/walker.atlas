@@ -1,0 +1,61 @@
+
+walker.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+animation
+  rotate: false
+  xy: 1, 203
+  size: 150, 200
+  orig: 150, 200
+  offset: 0, 0
+  index: 1
+animation
+  rotate: false
+  xy: 1, 1
+  size: 150, 200
+  orig: 150, 200
+  offset: 0, 0
+  index: 2
+animation
+  rotate: false
+  xy: 153, 203
+  size: 150, 200
+  orig: 150, 200
+  offset: 0, 0
+  index: 3
+animation
+  rotate: false
+  xy: 153, 1
+  size: 150, 200
+  orig: 150, 200
+  offset: 0, 0
+  index: 4
+animation
+  rotate: false
+  xy: 305, 203
+  size: 150, 200
+  orig: 150, 200
+  offset: 0, 0
+  index: 5
+animation
+  rotate: false
+  xy: 305, 1
+  size: 150, 200
+  orig: 150, 200
+  offset: 0, 0
+  index: 6
+animation
+  rotate: false
+  xy: 457, 203
+  size: 150, 200
+  orig: 150, 200
+  offset: 0, 0
+  index: 7
+animation
+  rotate: false
+  xy: 457, 1
+  size: 150, 200
+  orig: 150, 200
+  offset: 0, 0
+  index: 8
