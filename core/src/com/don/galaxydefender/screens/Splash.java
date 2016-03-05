@@ -132,7 +132,7 @@ public class Splash implements Screen {
             if (!living.getAlive() || posX + living.getWidth() < 0)
                 iter.remove();
             if (!(living.isShotLock()))
-                shoot(living, ProjectileType.ENEMY_BULLET);
+                shoot(living, ProjectileType.BULLET);
 
         }
 
