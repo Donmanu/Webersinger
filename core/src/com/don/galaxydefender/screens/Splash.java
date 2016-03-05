@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.don.galaxydefender.controller.Game_Controller;
+import com.don.galaxydefender.controller.GameController;
 import com.don.galaxydefender.logic.Enemy;
 import com.don.galaxydefender.logic.EnemyType;
 import com.don.galaxydefender.logic.Living;
@@ -23,7 +23,7 @@ public class Splash implements Screen {
     private static final String TAG = "package com.don.galaxydefender.screens;";
 
     Player player;
-    Game_Controller controller;
+    GameController controller;
     private SpriteBatch batch;
     private Sprite playerSplash, background;
     Texture enemySplash, projectileSplash;
@@ -44,7 +44,7 @@ public class Splash implements Screen {
         batch = new SpriteBatch();
 
         player = new Player();
-        controller = new Game_Controller(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        controller = new GameController(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         playerSplash = new Sprite(player.getTexture());
 
         background = new Sprite(new Texture(Gdx.files.internal("img/background.jpg")));

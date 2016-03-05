@@ -12,7 +12,7 @@ import java.awt.Rectangle;
  * Created by Carsten on 01.11.2015.
  */
 //TODO: Feintuning der Geschwindigkeiten, Buttons für die Schusseingabe etc.
-public class Game_Controller {
+public class GameController {
     private static final String TAG = "package com.don.galaxydefender.controller;";
     private final int buttonWidth = 156;
     private int m_iSizeX, m_iSizeY;
@@ -27,7 +27,7 @@ public class Game_Controller {
     private boolean m_bButtonA, m_bButtonB, m_bButtonX, m_bButtonY;
 
     //Constructor
-    public Game_Controller(int screenSizeX, int screenSizeY) {
+    public GameController(int screenSizeX, int screenSizeY) {
         this.m_iScreenSizeX = screenSizeX;
         this.m_iScreenSizeY = screenSizeY;
         m_iSizeX = this.m_iScreenSizeY / 3;
