@@ -10,18 +10,8 @@ eclipse.project {
     name = appName + "-core"
 }
 
-apply plugin: "android"
-android {
-    compileSdkVersion 17
-    buildToolsVersion "19.0.0"
-
-    defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 18
-    }
-}
-
 // Eintrag für den Import der SPlite Datenbank
 dependencies {
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
+
 }
