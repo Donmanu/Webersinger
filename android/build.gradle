@@ -119,7 +119,3 @@ idea {
     }
 }
 
-// Eintrag für den Import der SPlite Datenbank
-dependencies {
-    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
-}

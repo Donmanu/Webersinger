@@ -3,8 +3,7 @@ package com.don.galaxydefender.databaseAccess;
 /**
  * Created by Carsten on 21.04.2016.
  */
-import android.content.*;
-//import android.content.Context;
+import android.content.Context;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
