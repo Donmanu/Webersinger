@@ -9,9 +9,3 @@ sourceSets.main.java.srcDirs = [ "src/" ]
 eclipse.project {
     name = appName + "-core"
 }
-
-// Eintrag für den Import der SPlite Datenbank
-dependencies {
-    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
-
-}
