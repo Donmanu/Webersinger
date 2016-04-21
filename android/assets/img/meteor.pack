@@ -1,0 +1,61 @@
+
+meteor.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+meteor_top
+  rotate: false
+  xy: 0, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+meteor_top_right
+  rotate: false
+  xy: 0, 64
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+meteor_right
+  rotate: false
+  xy: 32, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+meteor_bottom_right
+  rotate: false
+  xy: 0, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+meteor_bottom
+  rotate: false
+  xy: 32, 64
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+meteor_bottom_left
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+meteor_left
+  rotate: false
+  xy: 32, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 7
+meteor_top_left
+  rotate: false
+  xy: 32, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 8
