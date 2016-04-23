@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.don.galaxydefender.GalaxyDefender;
 
 import java.util.Iterator;
 
@@ -27,13 +28,15 @@ public class TitleScreen implements Screen {
 
     //TODO: Logo? / Title Image?
 
-    private static final String TAG = "package com.don.galaxydefender.screens;";
+    private static final String TAG = "com.don.galaxydefender.screens";
 
     private final int SCREEN_WIDTH = Gdx.graphics.getWidth();
     private final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
     private static final String[] METEOR_ANIMATION_NAMES = new String[] {
             "meteor_top", "meteor_top_right", "meteor_right", "meteor_bottom_right",
             "meteor_bottom", "meteor_bottom_left", "meteor_left", "meteor_top_left"};
+
+    private final GalaxyDefender game;
 
     private static Animation meteorAnimation; // done
     private static Music titleScreenMusic; // done
@@ -42,13 +45,14 @@ public class TitleScreen implements Screen {
     private static TextureAtlas buttonAtlas, meteorAtlas; // done
     private static Skin buttonSkin; // done
     private static Table table; // done
-    private static TextButton buttonNewGame, buttonLoadGame, buttonCredits, buttonOptions, buttonExit; // done
+    private static TextButton buttonNewGame, buttonLoadGame, buttonCredits, buttonSettings, buttonExit; // done
     private static BitmapFont white; //, black; // done
     private static Array<Rectangle> meteors; // done
     private static long lastMeteorTime; // done
     private static float stateTime; // done
 
-    public TitleScreen() {
+    public TitleScreen(GalaxyDefender game) {
+        this.game = game;
         meteors = new Array<Rectangle>();
         stage = new Stage();
         background = new Sprite(new Texture(Gdx.files.internal("img/Title_Screen.png")));
@@ -100,17 +104,17 @@ public class TitleScreen implements Screen {
 
     @Override
     public void pause() {
-
+        Gdx.app.log(TAG, "Title Screen paused");
     }
 
     @Override
     public void resume() {
-
+        Gdx.app.log(TAG, "Title Screen resumed");
     }
 
     @Override
     public void hide() {
-
+        Gdx.app.log(TAG, "Title Screen hidden");
     }
 
     @Override
@@ -121,6 +125,8 @@ public class TitleScreen implements Screen {
         stage.dispose();
         buttonSkin.dispose();
         white.dispose();
+        titleScreenMusic.dispose();
+        Gdx.app.log(TAG, "Disposing...");
         //black.dispose();
     }
 
@@ -153,6 +159,8 @@ public class TitleScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(TAG, "Starting New Game");
+                dispose();
+                game.setScreen(new MainMenuScreen(game));
             }
         });
 
@@ -161,14 +169,16 @@ public class TitleScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(TAG, "Loading saved Games");
+                // TODO: set up saved games dialog
             }
         });
 
-        buttonOptions = new TextButton("Settings", textButtonStyle);
-        buttonOptions.addListener(new ClickListener(){
+        buttonSettings = new TextButton("Settings", textButtonStyle);
+        buttonSettings.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(TAG, "Settings clicked");
+                // TODO: popup dialog or separate screen?
             }
         });
 
@@ -177,6 +187,7 @@ public class TitleScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(TAG, "Credits clicked");
+                // TODO: popup dialog or separate screen?
             }
         });
 
@@ -203,7 +214,7 @@ public class TitleScreen implements Screen {
         table.row();
         table.add(buttonLoadGame).center().size(buttonWidth, buttonHeight).pad(buttonPad);
         table.row();
-        table.add(buttonOptions).center().size(buttonWidth, buttonHeight).pad(buttonPad);
+        table.add(buttonSettings).center().size(buttonWidth, buttonHeight).pad(buttonPad);
         table.row();
         table.add(buttonCredits).center().size(buttonWidth, buttonHeight).pad(buttonPad);
         table.row();

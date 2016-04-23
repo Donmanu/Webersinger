@@ -1,13 +1,9 @@
 package com.don.galaxydefender;
 
-
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.don.galaxydefender.screens.FinishedMainMenu;
-import com.don.galaxydefender.screens.Splash;
-import com.don.galaxydefender.screens.SplashTestSuite;
 import com.don.galaxydefender.screens.TitleScreen;
 
 public class GalaxyDefender extends Game implements ApplicationListener {
@@ -21,7 +17,7 @@ public class GalaxyDefender extends Game implements ApplicationListener {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setColor(0, 0, 0, 1);
-		this.setScreen(new TitleScreen());
+		this.setScreen(new TitleScreen(this));
 	}
 
 	@Override
