@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Enemy extends Living {
-    //Test Konfig
 
     public Enemy(EnemyType enemyType) {
         switch (enemyType){
