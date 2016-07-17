@@ -1,4 +1,4 @@
-package com.don.galaxydefender.logic;
+package com.don.galaxydefender.android.logic;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Living extends Moveable {

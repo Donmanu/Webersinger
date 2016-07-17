@@ -1,4 +1,4 @@
-package com.don.galaxydefender.screens;
+package com.don.galaxydefender.android.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -13,11 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.don.galaxydefender.GalaxyDefender;
+import com.don.galaxydefender.android.GalaxyDefender;
 
 public class MainMenuScreen implements Screen {
 
-    private static final String TAG = "com.don.galaxydefender.screens";
+    private static final String TAG = "com.don.galaxydefender.android.screens";
 
     private final int SCREEN_WIDTH = Gdx.graphics.getWidth();
     private final int SCREEN_HEIGHT = Gdx.graphics.getHeight();

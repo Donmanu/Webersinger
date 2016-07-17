@@ -1,4 +1,4 @@
-package com.don.galaxydefender;
+package com.don.galaxydefender.android;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -24,6 +24,7 @@ public class GameScreen implements Screen {
 
     final GalaxyDefender game;
 
+
     Texture spaceShipImage;
     Texture dropImage;
     Sound dropSound;
@@ -44,10 +45,10 @@ public class GameScreen implements Screen {
         screenHeight = Gdx.graphics.getHeight();
 
         dropImage = new Texture(Gdx.files.internal("badlogic.jpg"));
-        spaceShipImage = new Texture(Gdx.files.internal("mikasa.png"));
+        spaceShipImage = new Texture(Gdx.files.internal("img/mikasa.png"));
 
         dropSound = Gdx.audio.newSound(Gdx.files.internal("sounds/file1.wav"));
-        bgm = Gdx.audio.newMusic(Gdx.files.internal("sounds/Little Hero.wav"));
+        bgm = Gdx.audio.newMusic(Gdx.files.internal("sounds/file1.wav"));
         bgm.setLooping(true);
 
         camera = new OrthographicCamera();

@@ -1,4 +1,4 @@
-package com.don.galaxydefender.screens;
+package com.don.galaxydefender.android.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -20,7 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.don.galaxydefender.GalaxyDefender;
+import com.don.galaxydefender.android.GalaxyDefender;
+import com.don.galaxydefender.android.GameScreen;
 
 import java.util.Iterator;
 
@@ -28,7 +29,7 @@ public class TitleScreen implements Screen {
 
     //TODO: Logo? / Title Image?
 
-    private static final String TAG = "com.don.galaxydefender.screens";
+    private static final String TAG = "com.don.galaxydefender.android.screens";
 
     private final int SCREEN_WIDTH = Gdx.graphics.getWidth();
     private final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
@@ -160,7 +161,7 @@ public class TitleScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(TAG, "Starting New Game");
                 dispose();
-                game.setScreen(new MainMenuScreen(game));
+                game.setScreen(new Splash());
             }
         });
 

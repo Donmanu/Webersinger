@@ -1,4 +1,4 @@
-package com.don.galaxydefender;
+package com.don.galaxydefender.android;
 
 
 import com.badlogic.gdx.Gdx;

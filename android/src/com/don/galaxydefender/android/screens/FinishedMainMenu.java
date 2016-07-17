@@ -1,4 +1,4 @@
-package com.don.galaxydefender.screens;
+package com.don.galaxydefender.android.screens;
 
 
 import com.badlogic.gdx.Game;
@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.don.galaxydefender.GalaxyDefender;
+import com.don.galaxydefender.android.GalaxyDefender;
 
 public class FinishedMainMenu implements Screen {
 

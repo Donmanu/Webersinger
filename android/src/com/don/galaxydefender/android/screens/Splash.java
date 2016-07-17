@@ -1,4 +1,4 @@
-package com.don.galaxydefender.screens;
+package com.don.galaxydefender.android.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -8,19 +8,19 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.don.galaxydefender.controller.GameController;
-import com.don.galaxydefender.logic.Enemy;
-import com.don.galaxydefender.logic.EnemyType;
-import com.don.galaxydefender.logic.Living;
-import com.don.galaxydefender.logic.Player;
-import com.don.galaxydefender.logic.Projectile;
-import com.don.galaxydefender.logic.ProjectileType;
+import com.don.galaxydefender.android.controller.GameController;
+import com.don.galaxydefender.android.logic.Enemy;
+import com.don.galaxydefender.android.logic.EnemyType;
+import com.don.galaxydefender.android.logic.Living;
+import com.don.galaxydefender.android.logic.Player;
+import com.don.galaxydefender.android.logic.Projectile;
+import com.don.galaxydefender.android.logic.ProjectileType;
 
 import java.util.Iterator;
 
 public class Splash implements Screen {
 
-    private static final String TAG = "package com.don.galaxydefender.screens;";
+    private static final String TAG = "package com.don.galaxydefender.android.screens;";
 
     Player player;
     GameController controller;

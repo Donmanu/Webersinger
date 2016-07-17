@@ -1,19 +1,19 @@
-package com.don.galaxydefender.controller;
+package com.don.galaxydefender.android.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.don.galaxydefender.logic.Player;
+//import com.don.galaxydefender.android.logic.*;
 
-import java.awt.Rectangle;
+//import java.awt.*;
 
 /**
  * Created by Carsten on 01.11.2015.
  */
 //TODO: Feintuning der Geschwindigkeiten, Buttons für die Schusseingabe etc.
 public class GameController {
-    private static final String TAG = "package com.don.galaxydefender.controller;";
+    private static final String TAG = "package com.don.galaxydefender.android.controller;";
     private final int buttonWidth = 156;
     private int m_iSizeX, m_iSizeY;
     private int m_iScreenSizeX, m_iScreenSizeY;

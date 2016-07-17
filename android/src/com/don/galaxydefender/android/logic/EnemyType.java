@@ -1,4 +1,4 @@
-package com.don.galaxydefender.logic;
+package com.don.galaxydefender.android.logic;
 
 
 //TODO: Replace with actual enemy types

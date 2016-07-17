@@ -1,10 +1,10 @@
-package com.don.galaxydefender;
+package com.don.galaxydefender.android;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.don.galaxydefender.screens.TitleScreen;
+import com.don.galaxydefender.android.screens.TitleScreen;
 
 public class GalaxyDefender extends Game implements ApplicationListener {
 
