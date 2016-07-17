@@ -81,6 +81,7 @@ public class GameController {
         m_iTouchX2 = Gdx.input.getX(1);
         m_iTouchY2 = Gdx.input.getY(1);
 
+        //Input prüfen; Steuerkreuz aktiv?
         if (m_iTouchX1 <= m_iSizeX && m_iTouchY1 >= (m_iScreenSizeY - m_iSizeY) && Gdx.input.isTouched(0)) {
             touch1 = true;
             m_fSpeedPercent = calculateSpeed(m_iTouchX1, m_iTouchY1);
@@ -92,6 +93,7 @@ public class GameController {
             m_fSpeedPercent = 0;
         }
 
+        //Input prüfen, Buttons betätigt?
         if (!(touch1) && m_iTouchX1 >= (m_iScreenSizeX - 3 * buttonWidth) && m_iTouchY1 >= (m_iScreenSizeY - 3 * buttonWidth) && Gdx.input.isTouched(0)) {
             whichButtonPressed(m_iTouchX1, m_iTouchY1);
         } else if (!(touch2) && m_iTouchX2 >= (m_iScreenSizeX - 3 * buttonWidth) && m_iTouchY2 >= (m_iScreenSizeY - 3 * buttonWidth) && Gdx.input.isTouched(1)) {

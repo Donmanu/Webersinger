@@ -21,9 +21,10 @@ public class Enemy extends Living {
                 this.m_iDamage = 50;
                 this.m_iHealthPoints = 5;
                 this.m_iShieldPoints= 100;
-                this.m_bShooter = true;
+                this.m_bShooter = false;
                 this.m_bShotLock = false;
                 this.shootingInterval = 1000000000 * 2;
+                this.m_iShootingHeight = (int) (this.m_fCoordX + (this.m_iWidth / 2));
                 break;
             case TYPE2:
                 break;

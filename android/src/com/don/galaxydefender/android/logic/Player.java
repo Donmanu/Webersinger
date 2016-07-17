@@ -22,7 +22,8 @@ public class Player extends Living {
         this.m_iShieldPoints = 100;
         this.m_bShooter = true;
         this.m_bShotLock = false;
-        this.shootingInterval = 1000000000;
+        this.shootingInterval = 500000000;
+        this.m_iShootingHeight = (int) (this.m_fCoordX + (this.m_iWidth / 4));
     }
 
     @Override

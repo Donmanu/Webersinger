@@ -1,5 +1,7 @@
 package com.don.galaxydefender.android;
 
+import android.content.Context;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -11,6 +13,11 @@ public class GalaxyDefender extends Game implements ApplicationListener {
 	public static final String TITLE = "Galaxy Defender", VERSION = "0.0.0.0";
 	private SpriteBatch batch;
 	private BitmapFont font;
+	private Context context;
+
+	public GalaxyDefender(Context context) {
+		this.context = context;
+	}
 
 	@Override
 	public void create() {
@@ -38,6 +45,8 @@ public class GalaxyDefender extends Game implements ApplicationListener {
 	public BitmapFont getFont(){
 		return font;
 	}
+
+	public Context getContext() { return context; }
 
 
 }

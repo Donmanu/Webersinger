@@ -1,6 +1,8 @@
 package com.don.galaxydefender.android.screens;
 
 import com.badlogic.gdx.Gdx;
+import android.content.Context;
+import android.util.Log;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.don.galaxydefender.android.GalaxyDefender;
 import com.don.galaxydefender.android.controller.GameController;
 import com.don.galaxydefender.android.logic.Enemy;
 import com.don.galaxydefender.android.logic.EnemyType;
@@ -18,12 +21,20 @@ import com.don.galaxydefender.android.logic.ProjectileType;
 
 import java.util.Iterator;
 
+import DatabaseAccess.LvlDataSource;
+
 public class Splash implements Screen {
 
-    private static final String TAG = "package com.don.galaxydefender.android.screens;";
+    private static final String TAG = "DATABASE";
 
     private static int SCREEN_WIDTH = Gdx.graphics.getWidth();
     private static int SCREEN_HEIGHT = Gdx.graphics.getHeight();
+
+    private GalaxyDefender game;
+
+    public Splash(GalaxyDefender game) {
+        this.game = game;
+    }
 
     Player player;
     GameController controller;
@@ -57,6 +68,15 @@ public class Splash implements Screen {
 
         livingList = new Array<Living>();
         projectileList = new Array<Living>();
+
+        //Datenbank öffnen und Enemy Array auslesen
+        LvlDataSource dataSource = new LvlDataSource(game.getContext());
+
+        Log.d(TAG, "Die Datenquelle wird geöffnet.");
+        dataSource.open();
+
+        Log.d(TAG, "Die Datenquelle wird geschlossen.");
+        dataSource.close();
 
 
     }
@@ -134,9 +154,10 @@ public class Splash implements Screen {
             living.checkShotLock();
             if (!living.getAlive() || posX + living.getWidth() < 0)
                 iter.remove();
-            if (!(living.isShotLock()))
-                shoot(living, ProjectileType.BULLET);
-
+            if(living.isShooter()) {
+                if (!(living.isShotLock()))
+                    shoot(living, ProjectileType.BULLET);
+            }
         }
 
         //Schüsse bewegen
@@ -225,7 +246,8 @@ public class Splash implements Screen {
     public void shoot(Living living, ProjectileType proType) {
         Gdx.app.log(TAG, "Shots fired!");
         living.setShotLock(true);
-        projectile = new Projectile(proType, living.getCoordX(), (living.getCoordY() + (living.getHeight() / 2)));
+        projectile = new Projectile(proType, living.getCoordX() + living.getWidth(), (living.getCenterY() - living.get_ShootingHeigth()));
+        //projectile = new Projectile(proType, living.getCoordX(), (living.getCoordY() + (living.getHeight() / 2)));
         //projectile.setSpeedX(living.getSpeedX() * 2);
         Gdx.app.log(TAG, "Projectile X: " + projectile.getCoordX() + " Y: " + projectile.getCoordY());
         projectileList.add(projectile);

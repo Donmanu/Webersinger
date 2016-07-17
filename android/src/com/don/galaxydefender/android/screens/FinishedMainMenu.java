@@ -64,7 +64,7 @@ public class FinishedMainMenu implements Screen {
         buttonStart.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new Splash());
+                //((Game) Gdx.app.getApplicationListener()).setScreen(new Splash());
                 dispose();
             }
         });

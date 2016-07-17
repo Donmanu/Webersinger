@@ -8,12 +8,15 @@ public class Living extends Moveable {
     protected boolean m_bShooter;
     protected boolean m_bShotLock;
 
+    protected int m_iShootingHeight;
+
     protected long shootingTime;
 
     protected long shootingInterval;
 
     public Living(){ }
 
+    public int get_ShootingHeigth() {return m_iShootingHeight;}
     public int getHealthPoints(){
         return m_iHealthPoints;
     }
@@ -54,4 +57,5 @@ public class Living extends Moveable {
         }
     }
     public boolean playerShot() {return false; }
+
 }

@@ -168,7 +168,7 @@ public class TitleScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(TAG, "Starting New Game");
                 dispose();
-                game.setScreen(new ShopMenuScreen(game));
+                game.setScreen(new Splash(game));
             }
         });
 
