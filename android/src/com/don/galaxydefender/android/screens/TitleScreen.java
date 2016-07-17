@@ -14,6 +14,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -46,11 +49,14 @@ public class TitleScreen implements Screen {
     private static TextureAtlas buttonAtlas, meteorAtlas; // done
     private static Skin buttonSkin; // done
     private static Table table; // done
-    private static TextButton buttonNewGame, buttonLoadGame, buttonCredits, buttonSettings, buttonExit; // done
+    private static TextButton buttonNewGame, buttonLoadGame, buttonCredits,
+            buttonSettings, buttonExit, loadSavedGameDialogButton, backDialogButton; // done
     private static BitmapFont white; //, black; // done
     private static Array<Rectangle> meteors; // done
     private static long lastMeteorTime; // done
     private static float stateTime; // done
+    private static Dialog loadGameDialog;
+    private static Skin uiskin;
 
     public TitleScreen(GalaxyDefender game) {
         this.game = game;
@@ -62,7 +68,7 @@ public class TitleScreen implements Screen {
         table = new Table(buttonSkin);
         meteorAtlas = new TextureAtlas("img/meteor.pack");
         white = new BitmapFont(Gdx.files.internal("fonts/white.fnt"), false);
-        //black = new BitmapFont(Gdx.files.internal("fonts/black.fnt"), false);
+        uiskin = new Skin(Gdx.files.internal("gdx-tools/uiskin.json"));
     }
 
     @Override
@@ -71,6 +77,7 @@ public class TitleScreen implements Screen {
         animationSetup();
         buttonSetup();
         tableSetup();
+        loadGameDialogSetup();
         Gdx.input.setInputProcessor(stage);
         stage.addActor(table);
     }
@@ -161,7 +168,7 @@ public class TitleScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(TAG, "Starting New Game");
                 dispose();
-                game.setScreen(new Splash());
+                game.setScreen(new ShopMenuScreen(game));
             }
         });
 
@@ -170,6 +177,7 @@ public class TitleScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(TAG, "Loading saved Games");
+                loadGameDialog.show(stage);
                 // TODO: set up saved games dialog
             }
         });
@@ -199,6 +207,9 @@ public class TitleScreen implements Screen {
                 Gdx.app.exit();
             }
         });
+
+        loadSavedGameDialogButton = new TextButton("Load", textButtonStyle);
+        backDialogButton = new TextButton("Back", textButtonStyle);
     }
 
     private void tableSetup(){
@@ -222,6 +233,43 @@ public class TitleScreen implements Screen {
         table.add(buttonExit).center().size(buttonWidth, buttonHeight).pad(buttonPad);
     }
 
+    private void loadGameDialogSetup() {
+        int buttonWidth = SCREEN_WIDTH/2;
+        int buttonHeight = SCREEN_HEIGHT/10;
+        int buttonPad = SCREEN_HEIGHT/40;
+        int buttonPadTop = SCREEN_HEIGHT / 4;
+
+        int dialogContentWidth = SCREEN_WIDTH/2;
+        int dialogContentHeight = SCREEN_HEIGHT/10;
+        int dialogContentPad = SCREEN_HEIGHT/40;
+
+        ImageTextButton.ImageTextButtonStyle imageButtonStyle = new ImageTextButton.ImageTextButtonStyle();
+        imageButtonStyle.up = buttonSkin.getDrawable("button_black");
+        imageButtonStyle.down = buttonSkin.getDrawable("button_red");
+        imageButtonStyle.font = white;
+
+        loadGameDialog = new Dialog("Load Saved Game", uiskin) {
+            @Override
+            protected void result(Object object) {
+                Gdx.app.log(TAG, "Option: " + object);
+                loadGameDialog.hide();
+            }
+        };
+        loadGameDialog.getContentTable().setWidth(dialogContentWidth);
+        loadGameDialog.getContentTable().setHeight(dialogContentHeight);
+        loadGameDialog.getContentTable().setTouchable(Touchable.enabled);
+        loadGameDialog.getContentTable().add(new ImageTextButton("Game One", imageButtonStyle)).size(buttonWidth, buttonHeight);
+        loadGameDialog.getContentTable().row();
+        loadGameDialog.getContentTable().add(new ImageTextButton("Game Two", imageButtonStyle)).size(buttonWidth, buttonHeight);
+        loadGameDialog.getContentTable().row();
+        loadGameDialog.getContentTable().add(new ImageTextButton("Game three", imageButtonStyle)).size(buttonWidth, buttonHeight);
+        loadGameDialog.getContentTable().row();
+        loadGameDialog.getButtonTable().setWidth(dialogContentWidth);
+        loadGameDialog.getButtonTable().setHeight(dialogContentHeight);
+        loadGameDialog.button(loadSavedGameDialogButton).pad(buttonPad).padTop(buttonPadTop);
+        loadGameDialog.button(backDialogButton).pad(buttonPad).padTop(buttonPadTop);
+    }
+
     private void spawnMeteors() {
         Rectangle meteor = new Rectangle();
         meteor.x = MathUtils.random(-SCREEN_WIDTH, SCREEN_WIDTH);
@@ -240,8 +288,7 @@ public class TitleScreen implements Screen {
             meteor.y -= 4;
             if(meteor.x > SCREEN_WIDTH) {
                 iterator.remove();
-            }
-            if((meteor.y + meteor.height) < 0) {
+            } else if((meteor.y + meteor.height) < 0) {
                 iterator.remove();
             }
         }

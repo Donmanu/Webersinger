@@ -22,6 +22,9 @@ public class Splash implements Screen {
 
     private static final String TAG = "package com.don.galaxydefender.android.screens;";
 
+    private static int SCREEN_WIDTH = Gdx.graphics.getWidth();
+    private static int SCREEN_HEIGHT = Gdx.graphics.getHeight();
+
     Player player;
     GameController controller;
     private SpriteBatch batch;
@@ -94,7 +97,7 @@ public class Splash implements Screen {
         batch.begin();
 
         //Background zeichen, unterste Layer
-        batch.draw(background, 0, 0);
+        batch.draw(background, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         //Projectiles zeichnen
         for (Living projectile : projectileList) {

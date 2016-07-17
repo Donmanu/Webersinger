@@ -38,4 +38,6 @@ public class GalaxyDefender extends Game implements ApplicationListener {
 	public BitmapFont getFont(){
 		return font;
 	}
+
+
 }
