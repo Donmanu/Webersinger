@@ -19,7 +19,10 @@ import com.don.galaxydefender.android.logic.Player;
 import com.don.galaxydefender.android.logic.Projectile;
 import com.don.galaxydefender.android.logic.ProjectileType;
 
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import DatabaseAccess.LvlDataSource;
 
@@ -46,15 +49,17 @@ public class Splash implements Screen {
     Living projectile;
     Array<Living> livingList;
     Array<Living> projectileList;
+    Array<Enemy> toBeEnemyList = new Array<Enemy>();
 
 
     float[] player_speed = new float[2]; //Array der Player Geschwindigkeit
     char buttonPressed;
 
-    long time;
+    long time, starttime;
 
     @Override
     public void show() {
+        starttime = TimeUtils.millis();
         batch = new SpriteBatch();
 
         player = new Player();
@@ -66,6 +71,7 @@ public class Splash implements Screen {
         enemySplash = new Texture(Gdx.files.internal("img/Enemy_Standard.png"));
         projectileSplash = new Texture(Gdx.files.internal("img/Shot_Red.png"));
 
+
         livingList = new Array<Living>();
         projectileList = new Array<Living>();
 
@@ -74,6 +80,10 @@ public class Splash implements Screen {
 
         Log.d(TAG, "Die Datenquelle wird geöffnet.");
         dataSource.open();
+
+        //dataSource.insertEnemy(1, "TOWER", 2.0, 20, 20, "STRAIGHT");
+
+        toBeEnemyList = dataSource.getAllEnemies();
 
         Log.d(TAG, "Die Datenquelle wird geschlossen.");
         dataSource.close();
@@ -141,9 +151,18 @@ public class Splash implements Screen {
         batch.end();
 
         //Auto Spawn Gegner
-        if (TimeUtils.millis() - time > 10 * 1000) {
-            spawnEnemies();
+        Iterator<Enemy> enemyIterator = toBeEnemyList.iterator();
+        while(enemyIterator.hasNext()) {
+            Enemy spawnEnemy = enemyIterator.next();
+            if (TimeUtils.millis() - starttime > spawnEnemy.getAppearanceTime() * 1000 ) {
+                livingList.add(spawnEnemy);
+                enemyIterator.remove();
+            }
+
         }
+        /**if (TimeUtils.millis() - time > 10 * 1000) {
+            spawnEnemies();
+        }*/
 
         //Gegner bewegen, Autoschuss
         Iterator<Living> iter = livingList.iterator();
@@ -235,13 +254,13 @@ public class Splash implements Screen {
         batch.dispose();
         playerSplash.getTexture().dispose();
     }
-    public void spawnEnemies() {
+    /**public void spawnEnemies() {
         enemy = new Enemy(EnemyType.TOWER);
         //enemy.setTexture(enemySplash);
         livingList.add(enemy);
         time = TimeUtils.millis();
         Gdx.app.log(TAG, "new enemy spawned!");
-    }
+    }*/
 
     public void shoot(Living living, ProjectileType proType) {
         Gdx.app.log(TAG, "Shots fired!");

@@ -5,17 +5,17 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Enemy extends Living {
     private EnemyType enemyType;
-    private float appearanceTime;
+    private double appearanceTime;
 
-    public Enemy(EnemyType enemyType, int posX, int posY, MovementType movType, float time) {
+    public Enemy(EnemyType enemyType, int posX, int posY, MovementType movType, double time) {
         appearanceTime = time;
         switch (enemyType){
             case TOWER:
                 this.enemyType = enemyType;
                 this.m_iWidth = 50;
                 this.m_iHeight = 50;
-                this.m_fCoordX = Gdx.graphics.getWidth();
-                this.m_fCoordY = Gdx.graphics.getHeight() / 2;
+                this.m_fCoordX = Gdx.graphics.getWidth() - posX;
+                this.m_fCoordY = Gdx.graphics.getHeight() / 2 - posY;
                 this.m_iCenterX = (int)(this.m_fCoordX + (m_iWidth / 2));
                 this.m_iCenterY = (int)(this.m_fCoordY + (m_iHeight / 2));
                 this.m_Rectangle = new Rectangle(this.m_fCoordX, this.m_fCoordY, this.m_iWidth, this.m_iHeight);
@@ -59,5 +59,5 @@ public class Enemy extends Living {
 
     public EnemyType getEnemyType() { return this.enemyType; }
 
-    public float getAppearanceTime() { return this.appearanceTime; }
+    public double getAppearanceTime() { return this.appearanceTime; }
 }

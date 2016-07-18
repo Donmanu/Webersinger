@@ -7,6 +7,7 @@ import android.util.Log;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.badlogic.gdx.utils.Array;
 import com.don.galaxydefender.android.logic.Enemy;
 import com.don.galaxydefender.android.logic.EnemyType;
 import com.don.galaxydefender.android.logic.MovementType;
@@ -57,7 +58,7 @@ public class LvlDataSource {
     /**
         Methode um Enemy in Leveldesign
      */
-    public Enemy insertEnemy(int lvlNr, String enemyType, float time, int posX, int posY, String MovType) {
+    public Enemy insertEnemy(int lvlNr, String enemyType, double time, int posX, int posY, String MovType) {
         ContentValues values = new ContentValues();
         values.put(LvlDbHelper.COLUMN_LEVEL, lvlNr);
         values.put(LvlDbHelper.COLUMN_ENEMYTYPE, enemyType);
@@ -90,7 +91,7 @@ public class LvlDataSource {
 
         //int lvl = cursor.getInt(idLevel);
         EnemyType enemyType = EnemyType.valueOf(cursor.getString(idEnemyType));
-        float time = cursor.getFloat(idTime);
+        double time = cursor.getDouble(idTime);
         int posX = cursor.getInt(idPosX);
         int posY = cursor.getInt(idPosY);
         MovementType movType = MovementType.valueOf(cursor.getString(idMovType));
@@ -100,8 +101,8 @@ public class LvlDataSource {
         return enemy;
     }
 
-    public List<Enemy> getAllEnemies() {
-        List<Enemy> enemyList = new ArrayList<>();
+    public Array<Enemy> getAllEnemies() {
+        Array<Enemy> enemyList = new Array<>();
 
         Cursor cursor = database.query(LvlDbHelper.TABLE_LEVELDESIGN,
                 columns, null, null, null, null, null);

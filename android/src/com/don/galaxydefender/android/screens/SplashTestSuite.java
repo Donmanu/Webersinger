@@ -71,9 +71,9 @@ public class SplashTestSuite implements Screen {
             dispose();
         }
 
-        if (TimeUtils.nanoTime() - time > (1000000000 * 2)) {
+        /**if (TimeUtils.nanoTime() - time > (1000000000 * 2)) {
             spawnEnemies();
-        }
+        }*/
 
         Iterator<Living> iter = livingList.iterator();
         while (iter.hasNext()) {
@@ -134,11 +134,11 @@ public class SplashTestSuite implements Screen {
         projectileList.add(projectile);
     }
 
-    public void spawnEnemies() {
+    /**public void spawnEnemies() {
         enemy = new Enemy(EnemyType.TOWER);
         //enemy.setTexture(enemySplash);
         livingList.add(enemy);
         time = TimeUtils.nanoTime();
         Gdx.app.log(TAG, "new enemy spawned!");
-    }
+    }*/
 }
