@@ -4,10 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Enemy extends Living {
+    private EnemyType enemyType;
+    private float appearanceTime;
 
-    public Enemy(EnemyType enemyType) {
+    public Enemy(EnemyType enemyType, int posX, int posY, MovementType movType, float time) {
+        appearanceTime = time;
         switch (enemyType){
             case TOWER:
+                this.enemyType = enemyType;
                 this.m_iWidth = 50;
                 this.m_iHeight = 50;
                 this.m_fCoordX = Gdx.graphics.getWidth();
@@ -52,4 +56,8 @@ public class Enemy extends Living {
                 break;
         }
     }
+
+    public EnemyType getEnemyType() { return this.enemyType; }
+
+    public float getAppearanceTime() { return this.appearanceTime; }
 }

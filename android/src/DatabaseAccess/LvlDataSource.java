@@ -6,6 +6,11 @@ import android.util.Log;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+
+import com.don.galaxydefender.android.logic.Enemy;
+import com.don.galaxydefender.android.logic.EnemyType;
+import com.don.galaxydefender.android.logic.MovementType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +37,7 @@ public class LvlDataSource {
             LvlDbHelper.COLUMN_MOVEMENTTYPE
     };
 
+
     public LvlDataSource(Context context) {
         Log.d(LOG_TAG, "Unsere DataSource erzeugt jetzt den dbHelper.");
         dbHelper = new LvlDbHelper(context);
@@ -46,5 +52,72 @@ public class LvlDataSource {
     public void close() {
         dbHelper.close();
         Log.d(LOG_TAG, "Datenbank mit Hilfe des DbHelpers geschlossen.");
+    }
+
+    /**
+        Methode um Enemy in Leveldesign
+     */
+    public Enemy insertEnemy(int lvlNr, String enemyType, float time, int posX, int posY, String MovType) {
+        ContentValues values = new ContentValues();
+        values.put(LvlDbHelper.COLUMN_LEVEL, lvlNr);
+        values.put(LvlDbHelper.COLUMN_ENEMYTYPE, enemyType);
+        values.put(LvlDbHelper.COLUMN_TIME, time);
+        values.put(LvlDbHelper.COLUMN_POSX, posX);
+        values.put(LvlDbHelper.COLUMN_POSY, posY);
+        values.put(LvlDbHelper.COLUMN_MOVEMENTTYPE, MovType);
+
+        long insertId = database.insert(LvlDbHelper.TABLE_LEVELDESIGN, null, values);
+
+        Cursor cursor = database.query(LvlDbHelper.TABLE_LEVELDESIGN,
+                columns,LvlDbHelper.COLUMN_ID + "=" + insertId,
+                null, null, null, null);
+
+        cursor.moveToFirst();
+        Enemy enemy = cursorToEnemy(cursor);
+        cursor.close();
+
+        return enemy;
+    }
+
+    private Enemy cursorToEnemy(Cursor cursor) {
+        //int idIndex = cursor.getColumnIndex(LvlDbHelper.COLUMN_ID);
+        //int idLevel = cursor.getColumnIndex(LvlDbHelper.COLUMN_LEVEL);
+        int idEnemyType = cursor.getColumnIndex(LvlDbHelper.COLUMN_ENEMYTYPE);
+        int idTime = cursor.getColumnIndex(LvlDbHelper.COLUMN_TIME);
+        int idPosX = cursor.getColumnIndex(LvlDbHelper.COLUMN_POSX);
+        int idPosY = cursor.getColumnIndex(LvlDbHelper.COLUMN_POSY);
+        int idMovType = cursor.getColumnIndex(LvlDbHelper.COLUMN_MOVEMENTTYPE);
+
+        //int lvl = cursor.getInt(idLevel);
+        EnemyType enemyType = EnemyType.valueOf(cursor.getString(idEnemyType));
+        float time = cursor.getFloat(idTime);
+        int posX = cursor.getInt(idPosX);
+        int posY = cursor.getInt(idPosY);
+        MovementType movType = MovementType.valueOf(cursor.getString(idMovType));
+
+        Enemy enemy = new Enemy(enemyType, posX, posY, movType, time);
+
+        return enemy;
+    }
+
+    public List<Enemy> getAllEnemies() {
+        List<Enemy> enemyList = new ArrayList<>();
+
+        Cursor cursor = database.query(LvlDbHelper.TABLE_LEVELDESIGN,
+                columns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        Enemy enemy;
+
+        while(!cursor.isAfterLast()) {
+            enemy = cursorToEnemy(cursor);
+            enemyList.add(enemy);
+            Log.d(LOG_TAG, "EnemyType: " + enemy.getEnemyType() + ", AppearanceTime: " + enemy.getAppearanceTime());
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        return enemyList;
     }
 }
