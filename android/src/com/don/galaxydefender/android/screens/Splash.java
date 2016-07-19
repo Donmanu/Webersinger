@@ -29,7 +29,7 @@ public class Splash implements Screen {
     private static Music GameMusic, ShotFired, TargetHit;
     private static int SCREEN_WIDTH = Gdx.graphics.getWidth();
     private static int SCREEN_HEIGHT = Gdx.graphics.getHeight();
-    int level = 1;
+    int level;
     Player player;
     GameController controller;
     Texture enemySplash, projectileSplash;
@@ -46,8 +46,9 @@ public class Splash implements Screen {
     private SpriteBatch batch;
     private Sprite playerSplash, background;
 
-    public Splash(GalaxyDefender game) {
+    public Splash(GalaxyDefender game, int level) {
         this.game = game;
+        this.level = level;
     }
 
     @Override

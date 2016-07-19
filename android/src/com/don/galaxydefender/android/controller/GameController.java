@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-//import com.don.galaxydefender.android.logic.*;
-
-//import java.awt.*;
 
 /**
  * Created by Carsten on 01.11.2015.
@@ -23,7 +20,7 @@ public class GameController {
     private int m_iMidPointX, m_iMidPointY;
     private int m_iDirX, m_iDirY;
     private float m_fSpeedPercent;
-    private float m_fDamper = 0.4f;
+    private float m_fDamper = 0.1f;
     private boolean m_bButtonA, m_bButtonB, m_bButtonX, m_bButtonY;
 
     //Constructor
@@ -141,16 +138,11 @@ public class GameController {
      * @param Y Touchinput y-Wert
      * @return Länge des Richtungsvektors in Prozent
      */
-
     private float calculateSpeed(int X, int Y) {
-
-
         m_iDirX = X - m_iMidPointX;
         m_iDirY = Y - m_iMidPointY;
 
         return (float) (Math.sqrt(m_iDirX * m_iDirX + m_iDirY * m_iDirY) / (m_spriteController.getHeight() / 2));
-
-
     }
 
     /**
@@ -160,7 +152,6 @@ public class GameController {
      * @param Y Touchinput y-Wert
      * @return void
      */
-
     private void whichButtonPressed(int X, int Y) {
         //Button X
         if (X <= m_iScreenSizeX - buttonWidth * 2 && Y >= m_iScreenSizeY - 2 * buttonWidth && Y <= m_iScreenSizeY - buttonWidth) {

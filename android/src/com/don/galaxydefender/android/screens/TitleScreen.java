@@ -1,5 +1,7 @@
 package com.don.galaxydefender.android.screens;
 
+import android.util.Log;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -24,7 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.don.galaxydefender.android.GalaxyDefender;
-import com.don.galaxydefender.android.GameScreen;
+import com.don.galaxydefender.android.logic.Save;
 
 import java.util.Iterator;
 
@@ -32,16 +34,10 @@ public class TitleScreen implements Screen {
 
     //TODO: Logo? / Title Image?
 
-    private static final String TAG = "com.don.galaxydefender.android.screens";
-
-    private final int SCREEN_WIDTH = Gdx.graphics.getWidth();
-    private final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
+    private static final String TAG = "TitleScreen";
     private static final String[] METEOR_ANIMATION_NAMES = new String[] {
             "meteor_top", "meteor_top_right", "meteor_right", "meteor_bottom_right",
             "meteor_bottom", "meteor_bottom_left", "meteor_left", "meteor_top_left"};
-
-    private final GalaxyDefender game;
-
     private static Animation meteorAnimation; // done
     private static Music titleScreenMusic; // done
     private static Sprite background; // done
@@ -57,6 +53,9 @@ public class TitleScreen implements Screen {
     private static float stateTime; // done
     private static Dialog loadGameDialog;
     private static Skin uiskin;
+    private final int SCREEN_WIDTH = Gdx.graphics.getWidth();
+    private final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
+    private final GalaxyDefender game;
 
     public TitleScreen(GalaxyDefender game) {
         this.game = game;
@@ -168,7 +167,9 @@ public class TitleScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(TAG, "Starting New Game");
                 dispose();
-                game.setScreen(new Splash(game));
+                //Bei New Game wird vorerst direkt Level 1 aufgerufen
+                //TODO: evtl. Speicherstände auswählen, wenn alle voll sind einen löschen.
+                game.setScreen(new Splash(game, 1));
             }
         });
 
@@ -177,6 +178,7 @@ public class TitleScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log(TAG, "Loading saved Games");
+                //game.setScreen(new StageSelectScreen(game));
                 loadGameDialog.show(stage);
                 // TODO: set up saved games dialog
             }
@@ -239,14 +241,23 @@ public class TitleScreen implements Screen {
         int buttonPad = SCREEN_HEIGHT/40;
         int buttonPadTop = SCREEN_HEIGHT / 4;
 
+        final Save save = new Save();
+
         int dialogContentWidth = SCREEN_WIDTH/2;
         int dialogContentHeight = SCREEN_HEIGHT/10;
         int dialogContentPad = SCREEN_HEIGHT/40;
 
-        ImageTextButton.ImageTextButtonStyle imageButtonStyle = new ImageTextButton.ImageTextButtonStyle();
+
+        final ImageTextButton.ImageTextButtonStyle imageButtonStyle = new ImageTextButton.ImageTextButtonStyle();
         imageButtonStyle.up = buttonSkin.getDrawable("button_black");
         imageButtonStyle.down = buttonSkin.getDrawable("button_red");
         imageButtonStyle.font = white;
+
+        final ImageTextButton buttonGame1, buttonGame2, buttonGame3;
+        final ImageTextButton.ImageTextButtonStyle buttonChosen = new ImageTextButton.ImageTextButtonStyle();
+        buttonChosen.up = buttonSkin.getDrawable("button_red");
+        buttonChosen.down = buttonSkin.getDrawable("button_red");
+        buttonChosen.font = white;
 
         loadGameDialog = new Dialog("Load Saved Game", uiskin) {
             @Override
@@ -258,16 +269,78 @@ public class TitleScreen implements Screen {
         loadGameDialog.getContentTable().setWidth(dialogContentWidth);
         loadGameDialog.getContentTable().setHeight(dialogContentHeight);
         loadGameDialog.getContentTable().setTouchable(Touchable.enabled);
-        loadGameDialog.getContentTable().add(new ImageTextButton("Game One", imageButtonStyle)).size(buttonWidth, buttonHeight);
+        buttonGame1 = new ImageTextButton("Game 1", imageButtonStyle);
+        loadGameDialog.getContentTable().add(buttonGame1).size(buttonWidth, buttonHeight);
         loadGameDialog.getContentTable().row();
-        loadGameDialog.getContentTable().add(new ImageTextButton("Game Two", imageButtonStyle)).size(buttonWidth, buttonHeight);
+        buttonGame2 = new ImageTextButton("Game 2", imageButtonStyle);
+        loadGameDialog.getContentTable().add(buttonGame2).size(buttonWidth, buttonHeight);
         loadGameDialog.getContentTable().row();
-        loadGameDialog.getContentTable().add(new ImageTextButton("Game three", imageButtonStyle)).size(buttonWidth, buttonHeight);
+        buttonGame3 = new ImageTextButton("Game 3", imageButtonStyle);
+        loadGameDialog.getContentTable().add(buttonGame3).size(buttonWidth, buttonHeight);
         loadGameDialog.getContentTable().row();
         loadGameDialog.getButtonTable().setWidth(dialogContentWidth);
         loadGameDialog.getButtonTable().setHeight(dialogContentHeight);
         loadGameDialog.button(loadSavedGameDialogButton).pad(buttonPad).padTop(buttonPadTop);
         loadGameDialog.button(backDialogButton).pad(buttonPad).padTop(buttonPadTop);
+        save.setSaveSelect(0);
+
+        buttonGame1.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Log.d(TAG, "Game 1 selected");
+                buttonGame1.setStyle(buttonChosen);
+                buttonGame2.setStyle(imageButtonStyle);
+                buttonGame3.setStyle(imageButtonStyle);
+                save.setSaveSelect(1);
+                //dispose();
+                //Bei New Game wird vorerst direkt Level 1 aufgerufen
+                //TODO: evtl. Speicherstände auswählen, wenn alle voll sind einen löschen.
+                //game.setScreen(new Splash(game, 1));
+            }
+        });
+        buttonGame2.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Log.d(TAG, "Game 2 selected");
+                buttonGame1.setStyle(imageButtonStyle);
+                buttonGame2.setStyle(buttonChosen);
+                buttonGame3.setStyle(imageButtonStyle);
+                save.setSaveSelect(2);
+                //dispose();
+                //Bei New Game wird vorerst direkt Level 1 aufgerufen
+                //TODO: evtl. Speicherstände auswählen, wenn alle voll sind einen löschen.
+                //game.setScreen(new Splash(game, 1));
+            }
+        });
+        buttonGame3.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Log.d(TAG, "Game 3 selected");
+                buttonGame1.setStyle(imageButtonStyle);
+                buttonGame2.setStyle(imageButtonStyle);
+                buttonGame3.setStyle(buttonChosen);
+                save.setSaveSelect(3);
+                //dispose();
+                //Bei New Game wird vorerst direkt Level 1 aufgerufen
+                //TODO: evtl. Speicherstände auswählen, wenn alle voll sind einen löschen.
+                //game.setScreen(new Splash(game, 1));
+
+            }
+        });
+        loadSavedGameDialogButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (save.getSaveSelect() < 1 || save.getSaveSelect() > 3) {
+                    Log.d(TAG, "Keine Auswahl getätigt.");
+                } else {
+                    Log.d(TAG, "Save " + save.getSaveSelect() + " wird geladen.");
+                    dispose();
+                    game.setScreen(new Splash(game, save.getSaveSelect()));
+                }
+            }
+        });
+
+
     }
 
     private void spawnMeteors() {
