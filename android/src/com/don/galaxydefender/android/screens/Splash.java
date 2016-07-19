@@ -1,7 +1,7 @@
 package com.don.galaxydefender.android.screens;
 
 import com.badlogic.gdx.Gdx;
-import android.content.Context;
+
 import android.util.Log;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,16 +13,11 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.don.galaxydefender.android.GalaxyDefender;
 import com.don.galaxydefender.android.controller.GameController;
 import com.don.galaxydefender.android.logic.Enemy;
-import com.don.galaxydefender.android.logic.EnemyType;
 import com.don.galaxydefender.android.logic.Living;
 import com.don.galaxydefender.android.logic.Player;
 import com.don.galaxydefender.android.logic.Projectile;
 import com.don.galaxydefender.android.logic.ProjectileType;
-
-import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import DatabaseAccess.LvlDataSource;
 
@@ -39,6 +34,7 @@ public class Splash implements Screen {
         this.game = game;
     }
 
+    int level = 1;
     Player player;
     GameController controller;
     private SpriteBatch batch;
@@ -83,7 +79,7 @@ public class Splash implements Screen {
 
         //dataSource.insertEnemy(1, "TOWER", 2.0, 20, 20, "STRAIGHT");
 
-        toBeEnemyList = dataSource.getAllEnemies();
+        toBeEnemyList = dataSource.getEnemies(level);
 
         Log.d(TAG, "Die Datenquelle wird geschlossen.");
         dataSource.close();

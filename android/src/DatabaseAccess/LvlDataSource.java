@@ -101,11 +101,11 @@ public class LvlDataSource {
         return enemy;
     }
 
-    public Array<Enemy> getAllEnemies() {
+    public Array<Enemy> getEnemies(int level) {
         Array<Enemy> enemyList = new Array<>();
 
         Cursor cursor = database.query(LvlDbHelper.TABLE_LEVELDESIGN,
-                columns, null, null, null, null, null);
+                columns, LvlDbHelper.COLUMN_LEVEL + "=" + level, null, null, null, null);
 
         cursor.moveToFirst();
         Enemy enemy;
