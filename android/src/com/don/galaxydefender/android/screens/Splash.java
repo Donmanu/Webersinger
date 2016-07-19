@@ -1,9 +1,10 @@
 package com.don.galaxydefender.android.screens;
 
-import com.badlogic.gdx.Gdx;
-
 import android.util.Log;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -17,6 +18,7 @@ import com.don.galaxydefender.android.logic.Living;
 import com.don.galaxydefender.android.logic.Player;
 import com.don.galaxydefender.android.logic.Projectile;
 import com.don.galaxydefender.android.logic.ProjectileType;
+
 import java.util.Iterator;
 
 import DatabaseAccess.LvlDataSource;
@@ -24,21 +26,12 @@ import DatabaseAccess.LvlDataSource;
 public class Splash implements Screen {
 
     private static final String TAG = "DATABASE";
-
+    private static Music GameMusic, ShotFired, TargetHit;
     private static int SCREEN_WIDTH = Gdx.graphics.getWidth();
     private static int SCREEN_HEIGHT = Gdx.graphics.getHeight();
-
-    private GalaxyDefender game;
-
-    public Splash(GalaxyDefender game) {
-        this.game = game;
-    }
-
     int level = 1;
     Player player;
     GameController controller;
-    private SpriteBatch batch;
-    private Sprite playerSplash, background;
     Texture enemySplash, projectileSplash;
     //Living player;
     Living enemy;
@@ -46,15 +39,20 @@ public class Splash implements Screen {
     Array<Living> livingList;
     Array<Living> projectileList;
     Array<Enemy> toBeEnemyList = new Array<Enemy>();
-
-
     float[] player_speed = new float[2]; //Array der Player Geschwindigkeit
     char buttonPressed;
-
     long time, starttime;
+    private GalaxyDefender game;
+    private SpriteBatch batch;
+    private Sprite playerSplash, background;
+
+    public Splash(GalaxyDefender game) {
+        this.game = game;
+    }
 
     @Override
     public void show() {
+        musicSetup();
         starttime = TimeUtils.millis();
         batch = new SpriteBatch();
 
@@ -71,13 +69,12 @@ public class Splash implements Screen {
         livingList = new Array<Living>();
         projectileList = new Array<Living>();
 
+
         //Datenbank öffnen und Enemy Array auslesen
         LvlDataSource dataSource = new LvlDataSource(game.getContext());
 
         Log.d(TAG, "Die Datenquelle wird geöffnet.");
         dataSource.open();
-
-        //dataSource.insertEnemy(1, "TOWER", 2.0, 20, 20, "STRAIGHT");
 
         toBeEnemyList = dataSource.getEnemies(level);
 
@@ -146,7 +143,7 @@ public class Splash implements Screen {
         }
         batch.end();
 
-        //Auto Spawn Gegner
+        //Gegner spawnen
         Iterator<Enemy> enemyIterator = toBeEnemyList.iterator();
         while(enemyIterator.hasNext()) {
             Enemy spawnEnemy = enemyIterator.next();
@@ -167,12 +164,20 @@ public class Splash implements Screen {
             living.move(living.getSpeedX(), 0);
             float posX = living.getRectangle().x;
             living.checkShotLock();
-            if (!living.getAlive() || posX + living.getWidth() < 0)
+            if (!living.getAlive())
                 iter.remove();
-            if(living.isShooter()) {
-                if (!(living.isShotLock()))
-                    shoot(living, ProjectileType.BULLET);
+            else {
+                //Gegner durchlaufen den Screen mehrfach bis sie tot sind
+                if (posX + living.getWidth() < 0) {
+                    living.setCoordX(Gdx.graphics.getWidth());
+                }
+                //Schuss?
+                if (living.isShooter()) {
+                    if (!(living.isShotLock()))
+                        shoot(living, ProjectileType.BULLET);
+                }
             }
+
         }
 
         //Schüsse bewegen
@@ -262,9 +267,16 @@ public class Splash implements Screen {
         Gdx.app.log(TAG, "Shots fired!");
         living.setShotLock(true);
         projectile = new Projectile(proType, living.getCoordX() + living.getWidth(), (living.getCenterY() - living.get_ShootingHeigth()));
-        //projectile = new Projectile(proType, living.getCoordX(), (living.getCoordY() + (living.getHeight() / 2)));
-        //projectile.setSpeedX(living.getSpeedX() * 2);
         Gdx.app.log(TAG, "Projectile X: " + projectile.getCoordX() + " Y: " + projectile.getCoordY());
         projectileList.add(projectile);
+        ShotFired.play();
+    }
+
+    private void musicSetup() {
+        GameMusic = Gdx.audio.newMusic(Gdx.files.internal("bgm/TitleScreenMusic.mp3"));
+        ShotFired = Gdx.audio.newMusic(Gdx.files.internal("sounds/LaserFired.wav"));
+        GameMusic.setLooping(true);
+        GameMusic.play();
+        GameMusic.setVolume(5);
     }
 }
